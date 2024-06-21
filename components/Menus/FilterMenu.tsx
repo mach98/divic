@@ -12,16 +12,32 @@ import { COLORS } from '@/themes/colors';
 import { SHIPMENT_STATUS } from '@/data';
 
 interface FilterMenuProps {
-  selectedShipmentStatus: string;
-  setSelectedShipmentStatus: () => void;
+  selectedShipmentStatus: string[];
+  setSelectedShipmentStatus: (status: string[]) => void;
   onPress: () => void;
 }
 
 type Ref = BottomSheet;
 
 export const FilterMenu: FC<FilterMenuProps> = forwardRef<Ref, FilterMenuProps>(
-  (props, ref) => {
+  ({ selectedShipmentStatus, setSelectedShipmentStatus, onPress }, ref) => {
     const snapPoints = useMemo(() => ['45%'], []);
+
+    const toggleStatus = (status: string) => {
+      if (selectedShipmentStatus.includes(status)) {
+        setSelectedShipmentStatus(
+          selectedShipmentStatus.filter((item) => item !== status)
+        );
+      } else {
+        setSelectedShipmentStatus([...selectedShipmentStatus, status]);
+      }
+    };
+
+    const closeFilterMenu = () => {
+      if (ref && typeof ref === 'object' && ref.current) {
+        ref.current.close();
+      }
+    };
 
     return (
       <BottomSheet
@@ -39,7 +55,7 @@ export const FilterMenu: FC<FilterMenuProps> = forwardRef<Ref, FilterMenuProps>(
               alignItems: 'center',
             }}
           >
-            <TouchableOpacity>
+            <TouchableOpacity onPress={closeFilterMenu}>
               <Text
                 style={{
                   color: COLORS.primary,
@@ -50,7 +66,7 @@ export const FilterMenu: FC<FilterMenuProps> = forwardRef<Ref, FilterMenuProps>(
               </Text>
             </TouchableOpacity>
             <Text style={{ fontSize: 20, fontWeight: '700' }}>Filters</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={closeFilterMenu}>
               <Text style={{ color: COLORS.primary, fontSize: 20 }}>Done</Text>
             </TouchableOpacity>
           </View>
@@ -78,15 +94,20 @@ export const FilterMenu: FC<FilterMenuProps> = forwardRef<Ref, FilterMenuProps>(
             style={{ marginTop: 10, width: '100%' }}
             renderItem={({ item }) => (
               <TouchableOpacity
-                style={{
-                  padding: 10,
-                  paddingHorizontal: 15,
-                  backgroundColor: COLORS.listItemBackgroundColor,
-                  margin: 5,
-                  borderRadius: 10,
-                }}
+                style={[
+                  styles.itemContainer,
+                  selectedShipmentStatus.includes(item) &&
+                    styles.selectedItemContainer,
+                ]}
+                onPress={() => toggleStatus(item)}
               >
-                <Text style={{ color: COLORS.canceledText, fontSize: 20 }}>
+                <Text
+                  style={[
+                    styles.itemText,
+                    selectedShipmentStatus.includes(item) &&
+                      styles.selectedItemText,
+                  ]}
+                >
                   {item}
                 </Text>
               </TouchableOpacity>
@@ -111,6 +132,24 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 15,
+  },
+  itemContainer: {
+    padding: 10,
+    paddingHorizontal: 15,
+    backgroundColor: COLORS.listItemBackgroundColor,
+    margin: 5,
+    borderRadius: 10,
+  },
+  itemText: {
+    color: COLORS.canceledText,
+    fontSize: 20,
+  },
+  selectedItemText: {
+    color: COLORS.primary,
+  },
+  selectedItemContainer: {
+    borderColor: COLORS.primary,
+    borderWidth: 1,
   },
 });
 

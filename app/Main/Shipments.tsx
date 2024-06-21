@@ -20,7 +20,9 @@ import { FilterMenu } from '@/components/Menus/FilterMenu';
 
 const Shipments = () => {
   const [isChecked, setIsChecked] = useState(false);
-  const [selectedShipmentStatus, setSelectedShipmentStatus] = useState([]);
+  const [selectedShipmentStatus, setSelectedShipmentStatus] = useState<
+    string[]
+  >([]);
   const filterMenuRef = useRef<BottomSheet>(null);
   const data: ShipmentItem[] = useRandomData(20);
 
@@ -110,7 +112,11 @@ const Shipments = () => {
         renderItem={renderShipments}
         ItemSeparatorComponent={renderSeparator}
       />
-      <FilterMenu ref={filterMenuRef} />
+      <FilterMenu
+        ref={filterMenuRef}
+        selectedShipmentStatus={selectedShipmentStatus}
+        setSelectedShipmentStatus={setSelectedShipmentStatus}
+      />
     </SafeAreaView>
   );
 };

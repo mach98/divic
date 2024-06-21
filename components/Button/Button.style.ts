@@ -11,4 +11,13 @@ export const styles = StyleSheet.create({
     fontWeight: '900',
     fontSize: 20,
   },
+  SButtonIconContainer: {
+    marginRight: 8,
+  },
+  SButtonWithIcon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+  },
 });

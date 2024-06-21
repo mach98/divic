@@ -8,17 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-interface LoginMenuProps {
-  adults: number;
-  child: number;
-  infants: number;
-  incrementAdult: () => void;
-  incrementChild: () => void;
-  incrementInfant: () => void;
-  decrementAdult: () => void;
-  decrementChild: () => void;
-  decrementInfant: () => void;
-}
+interface LoginMenuProps {}
 
 type Ref = BottomSheet;
 export const LoginMenu: FC<LoginMenuProps> = forwardRef<Ref, LoginMenuProps>(

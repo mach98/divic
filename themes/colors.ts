@@ -13,4 +13,6 @@ export const COLORS = {
   onHoldText: '#DB7E21',
   searchIconColor: '#A7A3B3',
   primaryBackgroundColor: '#FFF',
+  callButtonColor: '#6E91EC',
+  whatsappButtonColor: '#25D366',
 };

@@ -2,7 +2,7 @@ import { Text, TouchableOpacity, ViewStyle } from 'react-native';
 import React, { FC } from 'react';
 import { styles } from './Button.style';
 
-interface SButtonProps {
+export interface SButtonProps {
   title: string;
   onPress: () => void;
   fontColor?: string;

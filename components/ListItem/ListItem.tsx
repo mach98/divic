@@ -9,10 +9,16 @@ import {
 } from 'react-native';
 import React, { FC, useState } from 'react';
 import Checkbox from 'expo-checkbox';
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  AntDesign,
+  Ionicons,
+  MaterialCommunityIcons,
+} from '@expo/vector-icons';
 import { Box } from '@/themes/images';
 import { COLORS } from '@/themes/colors';
 import ListItemCollapsibleContainer from './ListItemCollapsibleContainer';
+import { styles } from './ListItem.styles';
+import SButtonWithIcon from '../Button/SButtonWithIcon';
 
 export type ListItemProps = {
   title: string;
@@ -83,24 +89,46 @@ const ListItem: FC<{ item: ListItemProps }> = ({ item }) => {
       </View>
       <ListItemCollapsibleContainer expanded={expanded}>
         <View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
+          <View style={styles.locationDetailsSection}>
             <View>
-              <Text style={{ color: COLORS.primary }}>Origin</Text>
-              <Text style={{ fontSize: 20 }}>{item.origin}</Text>
-              <Text style={{ fontSize: 18 }}>{item.originAddress}</Text>
+              <Text style={styles.locationHeader}>Origin</Text>
+              <Text style={styles.locationDetail}>{item.origin}</Text>
+              <Text style={styles.locationAddress}>{item.originAddress}</Text>
             </View>
             <AntDesign name='arrowright' size={30} color={COLORS.primary} />
             <View>
-              <Text style={{ color: COLORS.primary }}>Destination</Text>
-              <Text style={{ fontSize: 20 }}>{item.destination}</Text>
-              <Text style={{ fontSize: 18 }}>{item.destinationAddress}</Text>
+              <Text style={styles.locationHeader}>Destination</Text>
+              <Text style={styles.locationDetail}>{item.destination}</Text>
+              <Text style={styles.locationAddress}>
+                {item.destinationAddress}
+              </Text>
             </View>
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+            <SButtonWithIcon
+              title='Call'
+              onPress={() => {}}
+              borderRadius={10}
+              buttonColor={COLORS.callButtonColor}
+            >
+              <Ionicons
+                name='call'
+                color={COLORS.primaryBackgroundColor}
+                size={25}
+              />
+            </SButtonWithIcon>
+            <SButtonWithIcon
+              title='Whatsapp'
+              onPress={() => {}}
+              buttonColor={COLORS.whatsappButtonColor}
+              borderRadius={10}
+            >
+              <Ionicons
+                name='logo-whatsapp'
+                color={COLORS.primaryBackgroundColor}
+                size={25}
+              />
+            </SButtonWithIcon>
           </View>
         </View>
       </ListItemCollapsibleContainer>
@@ -109,44 +137,3 @@ const ListItem: FC<{ item: ListItemProps }> = ({ item }) => {
 };
 
 export default ListItem;
-
-const styles = StyleSheet.create({
-  wrap: {
-    backgroundColor: COLORS.listItemBackgroundColor,
-    borderRadius: 10,
-    padding: 15,
-  },
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 10,
-    justifyContent: 'space-between',
-  },
-  boxImg: {
-    width: 30,
-    height: 30,
-    marginHorizontal: 10,
-  },
-  title: {
-    fontWeight: 'bold',
-  },
-  locationSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  origin: {
-    marginRight: 5,
-  },
-  destination: {
-    marginLeft: 5,
-  },
-  tag: {
-    padding: 5,
-    borderRadius: 3,
-  },
-  expandButton: {
-    backgroundColor: 'white',
-    borderRadius: 50,
-    padding: 10,
-  },
-});

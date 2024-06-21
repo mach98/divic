@@ -4,9 +4,9 @@ import {
   SafeAreaView,
   FlatList,
   TextInput,
-  TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useRef } from 'react';
 import ListItem, { ListItemProps } from '@/components/ListItem/ListItem';
 import { ShipmentItem } from '@/types/Shipment';
 import useRandomData from '@/hooks/useRandomData';
@@ -14,9 +14,14 @@ import { COLORS } from '@/themes/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { ScanIcon } from '@/themes/icons';
 import Checkbox from 'expo-checkbox';
+import SButtonWithIcon from '@/components/Button/SButtonWithIcon';
+import BottomSheet from '@gorhom/bottom-sheet';
+import { FilterMenu } from '@/components/Menus/FilterMenu';
 
 const Shipments = () => {
   const [isChecked, setIsChecked] = useState(false);
+  const [selectedShipmentStatus, setSelectedShipmentStatus] = useState([]);
+  const filterMenuRef = useRef<BottomSheet>(null);
   const data: ShipmentItem[] = useRandomData(20);
 
   const renderShipments = ({ item }: { item: ListItemProps }): ReactElement => {
@@ -25,6 +30,9 @@ const Shipments = () => {
 
   const renderSeparator = () => {
     return <View style={{ height: 15 }} />;
+  };
+  const openFilterMenu = () => {
+    filterMenuRef.current?.expand();
   };
   return (
     <SafeAreaView
@@ -58,36 +66,22 @@ const Shipments = () => {
           marginBottom: 10,
         }}
       >
-        <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            padding: 15,
-            backgroundColor: COLORS.listItemBackgroundColor,
-            borderRadius: 10,
-            width: '48%',
-            justifyContent: 'space-evenly',
-          }}
+        <SButtonWithIcon
+          title='Filters'
+          onPress={openFilterMenu}
+          buttonColor={COLORS.listItemBackgroundColor}
+          fontColor={COLORS.canceledText}
+          style={{ width: '48%' }}
         >
           <Ionicons name='filter' size={25} color={COLORS.canceledText} />
-          <Text style={{ fontSize: 20 }}>Filters</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            padding: 15,
-            backgroundColor: COLORS.primary,
-            borderRadius: 10,
-            width: '48%',
-            justifyContent: 'space-evenly',
-          }}
+        </SButtonWithIcon>
+        <SButtonWithIcon
+          title='Add Scan'
+          onPress={() => {}}
+          style={{ width: '48%' }}
         >
           <ScanIcon color={COLORS.listItemBackgroundColor} />
-          <Text style={{ color: COLORS.listItemBackgroundColor, fontSize: 20 }}>
-            Add Scan
-          </Text>
-        </TouchableOpacity>
+        </SButtonWithIcon>
       </View>
       <View
         style={{
@@ -110,11 +104,13 @@ const Shipments = () => {
         </View>
       </View>
       <FlatList
+        style={{ height: '80%' }}
         data={data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderShipments}
         ItemSeparatorComponent={renderSeparator}
       />
+      <FilterMenu ref={filterMenuRef} />
     </SafeAreaView>
   );
 };

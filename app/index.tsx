@@ -1,7 +1,8 @@
 import { Link, Redirect } from 'expo-router';
 import { Text, View } from 'react-native';
-import LoginScreen from './login';
+import LoginScreen from './Auth/login';
+import Shipments from './Main/Shipments';
 
 export default function Index() {
-  return <Redirect href={'/MainScreen'} />;
+  return <Redirect href='Main' />;
 }

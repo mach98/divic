@@ -62,7 +62,16 @@ const ListItem: FC<ListItemInterface> = ({ item, isChecked, onCheck }) => {
     setExpanded(!expanded);
   };
   return (
-    <View style={styles.wrap}>
+    <View
+      style={[
+        styles.wrap,
+        {
+          borderColor: isChecked
+            ? COLORS.primary
+            : COLORS.listItemBackgroundColor,
+        },
+      ]}
+    >
       <View style={styles.container}>
         <Checkbox
           value={isChecked}

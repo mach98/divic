@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.listItemBackgroundColor,
     borderRadius: 10,
     padding: 15,
+    borderWidth: 1,
   },
   container: {
     flexDirection: 'row',

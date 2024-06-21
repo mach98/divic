@@ -11,4 +11,6 @@ export const COLORS = {
   canceledText: '#58536E',
   onHoldColor: '#FFF3D5',
   onHoldText: '#DB7E21',
+  searchIconColor: '#A7A3B3',
+  primaryBackgroundColor: '#FFF',
 };

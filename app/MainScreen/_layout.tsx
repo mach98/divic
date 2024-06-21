@@ -2,7 +2,7 @@ import { Tabs } from 'expo-router';
 import {
   ShipmentIcon,
   WalletIcon,
-  ScanIcon,
+  BarcodeIcon,
   ProfileIcon,
 } from '@/themes/icons';
 import { COLORS } from '@/themes/colors';
@@ -12,12 +12,11 @@ import { CompanyLogo } from '@/themes/images';
 
 export default () => {
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
+    <Tabs screenOptions={{ headerShown: true }}>
       <Tabs.Screen
         name='Shipments'
         options={{
           tabBarIcon: () => <ShipmentIcon color={COLORS.primary} />,
-          headerShown: true,
           headerLeft: () => (
             <AntDesign
               name='user'
@@ -27,6 +26,7 @@ export default () => {
                 padding: 10,
                 borderRadius: 100,
                 backgroundColor: COLORS.receivedColor,
+                color: COLORS.primary,
               }}
             />
           ),
@@ -46,6 +46,7 @@ export default () => {
                 padding: 10,
                 borderRadius: 100,
                 backgroundColor: COLORS.receivedColor,
+                color: COLORS.primary,
               }}
             />
           ),
@@ -53,11 +54,13 @@ export default () => {
       />
       <Tabs.Screen
         name='Scan'
-        options={{ tabBarIcon: () => <ScanIcon color={COLORS.primary} /> }}
+        options={{ tabBarIcon: () => <BarcodeIcon color={COLORS.primary} /> }}
       />
       <Tabs.Screen
         name='Wallet'
-        options={{ tabBarIcon: () => <WalletIcon color={COLORS.primary} /> }}
+        options={{
+          tabBarIcon: () => <WalletIcon color={COLORS.primary} />,
+        }}
       />
       <Tabs.Screen
         name='Profile'

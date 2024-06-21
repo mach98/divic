@@ -1,0 +1,14 @@
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+  SButton: {
+    padding: 15,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  SButtonText: {
+    fontWeight: '900',
+    fontSize: 20,
+  },
+});

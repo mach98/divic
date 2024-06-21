@@ -19,15 +19,42 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import { FilterMenu } from '@/components/Menus/FilterMenu';
 
 const Shipments = () => {
-  const [isChecked, setIsChecked] = useState(false);
+  const data: ShipmentItem[] = useRandomData(20);
+  const [isChecked, setIsChecked] = useState<boolean[]>(
+    new Array(data.length).fill(false)
+  );
+  const [markAll, setMarkAll] = useState(false);
   const [selectedShipmentStatus, setSelectedShipmentStatus] = useState<
     string[]
   >([]);
   const filterMenuRef = useRef<BottomSheet>(null);
-  const data: ShipmentItem[] = useRandomData(20);
 
-  const renderShipments = ({ item }: { item: ListItemProps }): ReactElement => {
-    return <ListItem item={item} />;
+  const handleCheckboxChange = (index: number) => {
+    const updatedCheckedItems = [...isChecked];
+    updatedCheckedItems[index] = !updatedCheckedItems[index];
+    setIsChecked(updatedCheckedItems);
+  };
+
+  const handleMarkAll = () => {
+    const allChecked = !markAll;
+    setMarkAll(allChecked);
+    setIsChecked(new Array(data.length).fill(allChecked));
+  };
+
+  const renderShipments = ({
+    item,
+    index,
+  }: {
+    item: ListItemProps;
+    index: number;
+  }): ReactElement => {
+    return (
+      <ListItem
+        item={item}
+        isChecked={isChecked[index]}
+        onCheck={() => handleCheckboxChange(index)}
+      />
+    );
   };
 
   const renderSeparator = () => {
@@ -36,6 +63,7 @@ const Shipments = () => {
   const openFilterMenu = () => {
     filterMenuRef.current?.expand();
   };
+
   return (
     <SafeAreaView
       style={{ padding: 15, backgroundColor: COLORS.primaryBackgroundColor }}
@@ -101,7 +129,12 @@ const Shipments = () => {
             padding: 10,
           }}
         >
-          <Checkbox style={{ marginRight: 7 }} />
+          <Checkbox
+            style={{ marginRight: 7 }}
+            value={markAll}
+            onValueChange={handleMarkAll}
+            color={markAll ? COLORS.primary : undefined}
+          />
           <Text style={{ fontSize: 20, color: COLORS.primary }}>Mark All</Text>
         </View>
       </View>

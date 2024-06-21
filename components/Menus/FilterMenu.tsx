@@ -55,7 +55,12 @@ export const FilterMenu: FC<FilterMenuProps> = forwardRef<Ref, FilterMenuProps>(
               alignItems: 'center',
             }}
           >
-            <TouchableOpacity onPress={closeFilterMenu}>
+            <TouchableOpacity
+              onPress={() => {
+                setSelectedShipmentStatus([]);
+                closeFilterMenu();
+              }}
+            >
               <Text
                 style={{
                   color: COLORS.primary,

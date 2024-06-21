@@ -28,9 +28,13 @@ export type ListItemProps = {
   destination: string;
   destinationAddress?: string;
   tag: 'RECEIVED' | 'ERROR' | 'DELIVERED' | 'CANCELLED' | 'ON HOLD';
-  isSelected: boolean;
-  setIsSelected: () => void;
 };
+
+interface ListItemInterface {
+  item: ListItemProps;
+  isChecked: boolean;
+  onCheck: () => void;
+}
 
 const getColorByTag = (tag: string) => {
   switch (tag) {
@@ -49,7 +53,7 @@ const getColorByTag = (tag: string) => {
   }
 };
 
-const ListItem: FC<{ item: ListItemProps }> = ({ item }) => {
+const ListItem: FC<ListItemInterface> = ({ item, isChecked, onCheck }) => {
   const [expanded, setExpanded] = useState(false);
   const { text: textColor, background: backgroundColor } = getColorByTag(
     item.tag
@@ -60,7 +64,11 @@ const ListItem: FC<{ item: ListItemProps }> = ({ item }) => {
   return (
     <View style={styles.wrap}>
       <View style={styles.container}>
-        <Checkbox value={item.isSelected} onValueChange={item.setIsSelected} />
+        <Checkbox
+          value={isChecked}
+          onValueChange={onCheck}
+          color={isChecked ? COLORS.primary : undefined}
+        />
         <Image source={Box} style={styles.boxImg} />
         <View>
           <Text style={styles.title}>{item.title}</Text>

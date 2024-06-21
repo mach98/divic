@@ -39,7 +39,18 @@ const SButton: FC<SButtonProps> = ({
         style,
       ]}
     >
-      <Text>{title}</Text>
+      <Text
+        style={[
+          styles.SButtonText,
+          {
+            color: fontColor,
+            fontWeight: buttonTitleWeight,
+            fontSize: titleSize,
+          },
+        ]}
+      >
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };

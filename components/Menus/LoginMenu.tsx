@@ -56,7 +56,7 @@ export const LoginMenu: FC<LoginMenuProps> = forwardRef<Ref, LoginMenuProps>(
   }
 );
 
-LoginMenu.displayName = 'Travelers Menu';
+LoginMenu.displayName = 'Login Menu';
 
 const styles = StyleSheet.create({
   container: {

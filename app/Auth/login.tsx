@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React from 'react';
+import React, { useRef } from 'react';
 import { CompanyLogo } from '@/themes/images';
 import { useRouter } from 'expo-router';
+import BottomSheet from '@gorhom/bottom-sheet';
 
 const LoginScreen = () => {
+  const loginMenuRef = useRef<BottomSheet>(null);
   const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>

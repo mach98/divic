@@ -26,16 +26,38 @@ export default () => {
               color={focused ? COLORS.primary : COLORS.searchIconColor}
             />
           ),
-          headerLeft: () => <AntDesign name='user' size={25} />,
+          headerLeft: () => (
+            <AntDesign
+              name='user'
+              size={25}
+              style={{
+                marginHorizontal: 15,
+                borderRadius: 100,
+                backgroundColor: COLORS.canceledColor,
+                padding: 10,
+              }}
+              color={COLORS.receivedText}
+            />
+          ),
           headerTitle: () => (
             <Image
-              style={{ width: 250, height: 20, tintColor: COLORS.primary }}
+              style={{ width: 200, height: 20, tintColor: COLORS.primary }}
               source={CompanyLogo}
               resizeMode='contain'
             />
           ),
           headerRight: () => (
-            <Ionicons name='notifications-outline' size={25} />
+            <Ionicons
+              name='notifications-outline'
+              size={25}
+              color={COLORS.receivedText}
+              style={{
+                marginHorizontal: 15,
+                borderRadius: 100,
+                backgroundColor: COLORS.canceledColor,
+                padding: 10,
+              }}
+            />
           ),
         }}
       />

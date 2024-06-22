@@ -32,9 +32,9 @@ export const LoginMenu: FC<LoginMenuProps> = forwardRef<Ref, LoginMenuProps>(
     //   password: 'testy123@',
     // };
     const loginCredentials = {
-      url: 'qwerty',
-      username: 'test',
-      password: '123456',
+      url: '1',
+      username: '1',
+      password: '1',
     };
 
     const handleLogin = () => {

@@ -5,8 +5,15 @@ import {
   FlatList,
   TextInput,
   StyleSheet,
+  RefreshControl,
 } from 'react-native';
-import React, { ReactElement, useState, useRef } from 'react';
+import React, {
+  ReactElement,
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+} from 'react';
 import ListItem, { ListItemProps } from '@/components/ListItem/ListItem';
 import { ShipmentItem } from '@/types/Shipment';
 import useRandomData from '@/hooks/useRandomData';
@@ -23,6 +30,8 @@ const Shipments = () => {
   const [isChecked, setIsChecked] = useState<boolean[]>(
     new Array(data.length).fill(false)
   );
+  const [shipments, setShipments] = useState<ShipmentItem[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
   const [markAll, setMarkAll] = useState(false);
   const [selectedShipmentStatus, setSelectedShipmentStatus] = useState<
     string[]
@@ -40,6 +49,14 @@ const Shipments = () => {
     setMarkAll(allChecked);
     setIsChecked(new Array(data.length).fill(allChecked));
   };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setShipments(data);
+      setRefreshing(false);
+    }, 2000);
+  }, [data]);
 
   const renderShipments = ({
     item,
@@ -64,38 +81,22 @@ const Shipments = () => {
     filterMenuRef.current?.expand();
   };
 
+  useEffect(() => {
+    setShipments(data);
+  }, [data]);
   return (
-    <SafeAreaView
-      style={{ padding: 15, backgroundColor: COLORS.primaryBackgroundColor }}
-    >
-      <Text style={{ fontSize: 20, marginBottom: 5 }}>Hello,</Text>
-      <Text style={{ fontWeight: '700', fontSize: 25, marginBottom: 10 }}>
-        Williams Bolade
-      </Text>
-      <View
-        style={{
-          backgroundColor: COLORS.listItemBackgroundColor,
-          padding: 15,
-          marginBottom: 15,
-          borderRadius: 10,
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}
-      >
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.welcomeText}>Hello,</Text>
+      <Text style={styles.profileText}>Williams Bolade</Text>
+      <View style={styles.searchBar}>
         <Ionicons name='search' size={25} color={COLORS.searchIconColor} />
         <TextInput
           placeholder='Search'
           placeholderTextColor={COLORS.searchIconColor}
-          style={{ fontSize: 20, marginLeft: 10 }}
+          style={styles.searchInput}
         />
       </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginBottom: 10,
-        }}
-      >
+      <View style={styles.buttonSection}>
         <SButtonWithIcon
           title='Filters'
           onPress={openFilterMenu}
@@ -113,37 +114,27 @@ const Shipments = () => {
           <ScanIcon color={COLORS.listItemBackgroundColor} />
         </SButtonWithIcon>
       </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginBottom: 10,
-        }}
-      >
-        <Text style={{ fontWeight: '700', fontSize: 20 }}>Shipments</Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: 10,
-          }}
-        >
+      <View style={styles.shipmentSubheader}>
+        <Text style={styles.shipmentText}>Shipments</Text>
+        <View style={styles.markAllSection}>
           <Checkbox
             style={{ marginRight: 7 }}
             value={markAll}
             onValueChange={handleMarkAll}
             color={markAll ? COLORS.primary : undefined}
           />
-          <Text style={{ fontSize: 18, color: COLORS.primary }}>Mark All</Text>
+          <Text style={styles.markAllText}>Mark All</Text>
         </View>
       </View>
       <FlatList
         style={{ height: '80%' }}
-        data={data}
+        data={shipments}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderShipments}
         ItemSeparatorComponent={renderSeparator}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
       <FilterMenu
         ref={filterMenuRef}
@@ -155,3 +146,36 @@ const Shipments = () => {
 };
 
 export default Shipments;
+
+const styles = StyleSheet.create({
+  container: { padding: 15, backgroundColor: COLORS.primaryBackgroundColor },
+  welcomeText: { fontSize: 20, marginBottom: 5 },
+  profileText: { fontWeight: '700', fontSize: 25, marginBottom: 10 },
+  searchBar: {
+    backgroundColor: COLORS.listItemBackgroundColor,
+    padding: 15,
+    marginBottom: 15,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  searchInput: { fontSize: 20, marginLeft: 10 },
+  buttonSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  shipmentSubheader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  shipmentText: { fontWeight: '700', fontSize: 20 },
+  markAllSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 10,
+  },
+  markAllText: { fontSize: 18, color: COLORS.primary },
+});

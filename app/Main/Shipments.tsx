@@ -135,7 +135,7 @@ const Shipments = () => {
             onValueChange={handleMarkAll}
             color={markAll ? COLORS.primary : undefined}
           />
-          <Text style={{ fontSize: 20, color: COLORS.primary }}>Mark All</Text>
+          <Text style={{ fontSize: 18, color: COLORS.primary }}>Mark All</Text>
         </View>
       </View>
       <FlatList

@@ -24,6 +24,7 @@ const SButton: FC<SButtonProps> = ({
   borderColor,
   titleSize,
   borderThickness,
+  borderRadius,
   style,
 }) => {
   return (
@@ -35,6 +36,7 @@ const SButton: FC<SButtonProps> = ({
           backgroundColor: buttonColor,
           borderColor: borderColor,
           borderWidth: borderThickness,
+          borderRadius: borderRadius,
         },
         style,
       ]}

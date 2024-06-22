@@ -15,4 +15,5 @@ export const COLORS = {
   primaryBackgroundColor: '#FFF',
   callButtonColor: '#6E91EC',
   whatsappButtonColor: '#25D366',
+  inactiveColor: '#EAE7F2',
 };

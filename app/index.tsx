@@ -4,5 +4,5 @@ import LoginScreen from './Auth/login';
 import Shipments from './Main/Shipments';
 
 export default function Index() {
-  return <Redirect href='Main' />;
+  return <Redirect href='Auth' />;
 }

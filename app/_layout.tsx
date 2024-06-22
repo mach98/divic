@@ -1,4 +1,7 @@
+import { LoginMenu } from '@/components/Menus/LoginMenu';
+import { AuthProvider, useAuth } from '@/context/Auth';
 import { Stack } from 'expo-router';
+import { useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const AuthStack = () => (
@@ -12,11 +15,13 @@ const MainTab = () => (
     <Stack.Screen name='Main' />
   </Stack>
 );
+
 export default function RootLayout() {
-  const isLoggedIn = false;
+  const { isLoggedIn } = useAuth();
+
   return (
     <GestureHandlerRootView>
-      {isLoggedIn ? <MainTab /> : <AuthStack />}
+      <AuthProvider>{isLoggedIn ? <MainTab /> : <AuthStack />}</AuthProvider>
     </GestureHandlerRootView>
   );
 }

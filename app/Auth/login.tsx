@@ -10,21 +10,24 @@ import React, { useRef } from 'react';
 import { CompanyLogo } from '@/themes/images';
 import { useRouter } from 'expo-router';
 import BottomSheet from '@gorhom/bottom-sheet';
+import { LoginMenu } from '@/components/Menus/LoginMenu';
 
 const LoginScreen = () => {
   const loginMenuRef = useRef<BottomSheet>(null);
+
+  const openLoginMenu = () => {
+    loginMenuRef.current?.expand();
+  };
   const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoSpace}>
         <Image source={CompanyLogo} style={styles.logo} />
       </View>
-      <TouchableOpacity
-        style={styles.loginButton}
-        onPress={() => router.push('/loginMenu')}
-      >
+      <TouchableOpacity style={styles.loginButton} onPress={openLoginMenu}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
+      <LoginMenu ref={loginMenuRef} />
     </SafeAreaView>
   );
 };

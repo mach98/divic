@@ -20,22 +20,16 @@ type Ref = BottomSheet;
 export const LoginMenu: FC<LoginMenuProps> = forwardRef<Ref, LoginMenuProps>(
   (props, ref) => {
     const snapPoints = useMemo(() => ['90%'], []);
+    const loginCredentials = {
+      url: 'www.brandimic.com',
+      username: 'ali@brandimic.com',
+      password: 'testy123@',
+    };
     const router = useRouter();
     const { login } = useAuth();
-    const [url, setUrl] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-
-    // const loginCredentials = {
-    //   url: 'www.brandimic.com',
-    //   username: 'ali@brandimic.com',
-    //   password: 'testy123@',
-    // };
-    const loginCredentials = {
-      url: '1',
-      username: '1',
-      password: '1',
-    };
+    const [url, setUrl] = useState(loginCredentials.url);
+    const [username, setUsername] = useState(loginCredentials.username);
+    const [password, setPassword] = useState(loginCredentials.password);
 
     const handleLogin = () => {
       if (
